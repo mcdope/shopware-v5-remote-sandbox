@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+        
+    shopware:
+      image: dockware/dev:5.7.6
+      container_name: shopware
+      ports:
+          - "10022:22"   # ssh
+          - "10080:80"   # apache2
+          - "10443:443"  # apache2 https
+          - "13306:3306" # mysql port
+          - "8888:8888"
+          - "9999:9999"
+          - "9998:9998"
+      environment:
+         - MYSQL_USER=${SW_USER}
+         - MYSQL_PWD=${SW_PASS}
+         - SSH_USER=${SW_USER}
+         - SSH_PWD=${SW_PASS}
+         - XDEBUG_ENABLED=1
+         - XDEBUG_REMOTE_HOST=${XDEBUG_REMOTE_HOST}
+         - PHP_IDE_CONFIG=serverName=${DOMAIN}
+      networks:
+         - web
+      volumes:
+      - ./data/plugins_new_type:/var/www/html/custom/plugins
+      - ./data/plugins_old_type:/var/www/html/engine/Shopware/Plugins/Community
+      
+        
+networks:
+  web:
+    external: false
