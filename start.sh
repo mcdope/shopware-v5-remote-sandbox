@@ -81,7 +81,6 @@ echo "INFO: Installing provided plugins (new plugin system)..."
 OLDDIR=$PWD
 cd ./data/plugins_new_type/
 for plugin in * ; do
-	echo $plugin
 	docker-compose exec shopware ./bin/console sw:plugin:install $plugin
 	docker-compose exec shopware ./bin/console sw:plugin:activate $plugin
 done
